@@ -4,6 +4,7 @@ const wpi = require("node-wiring-pi");
 
 const DAT = 23;
 const CLK = 24;
+const MODE = "gpio";
 
 const DEFAULT_RED = 0;
 const DEFAULT_GREEN = 0;
@@ -12,16 +13,21 @@ const DEFAULT_BRIGHTNESS = 0.1;
 const DEFAULT_PIXELS = 8;
 
 class Blinkt {
-	constructor() {
-		wpi.setup("gpio");
-		wpi.pinMode(DAT, wpi.OUTPUT);
-		wpi.pinMode(CLK, wpi.OUTPUT);
+	constructor({ dat = DAT, clk = CLK, mode = MODE } = {}) {
+		this.dat = dat;
+		this.clk = clk;
+
+		wpi.setup(mode);
+		wpi.pinMode(this.dat, wpi.OUTPUT);
+		wpi.pinMode(this.clk, wpi.OUTPUT);
+
 		this.blinktPixels = Array.from(new Array(DEFAULT_PIXELS), (_, ix) => [
 			DEFAULT_RED,
 			DEFAULT_GREEN,
 			DEFAULT_BLUE,
 			DEFAULT_BRIGHTNESS
 		]);
+
 		this.sendUpdate();
 	}
 
@@ -29,7 +35,7 @@ class Blinkt {
 		return parseInt(31.0 * brightness, 10) & 0b11111;
 	}
 
-	getPixel({ r = DEFAULT_RED, g = DEFAULT_BLUE, b = DEFAULT_BLUE, brightness = DEFAULT_BRIGHTNESS } = {}) {
+	getPixel({ r = DEFAULT_RED, g = DEFAULT_GREEN, b = DEFAULT_BLUE, brightness = DEFAULT_BRIGHTNESS } = {}) {
 		return [parseInt(r, 10) & 255, parseInt(g, 10) & 255, parseInt(b, 10) & 255, this.getBrightness(brightness)];
 	}
 
@@ -56,9 +62,9 @@ class Blinkt {
 	writeByte(byte) {
 		for (let i = 0; i < DEFAULT_PIXELS; i++) {
 			const bit = (byte & (1 << (7 - i))) > 0 === true ? wpi.HIGH : wpi.LOW;
-			wpi.digitalWrite(DAT, bit);
-			wpi.digitalWrite(CLK, 1);
-			wpi.digitalWrite(CLK, 0);
+			wpi.digitalWrite(this.dat, bit);
+			wpi.digitalWrite(this.clk, 1);
+			wpi.digitalWrite(this.clk, 0);
 		}
 	}
 
@@ -75,4 +81,6 @@ class Blinkt {
 	}
 }
 
-module.exports = Blinkt;
+module.exports = {
+	Blinkt
+};
