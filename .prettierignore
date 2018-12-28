@@ -1,0 +1,6 @@
+readme.md
+*json
+Makefile
+Dockerfile
+.*
+node_modules
