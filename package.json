@@ -4,7 +4,8 @@
   "description": "Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.",
   "main": "Blinkt.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "pretty-quick --staged"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,10 @@
   "homepage": "https://github.com/globalroo/blinkt-js#readme",
   "dependencies": {
     "node-wiring-pi": "0.0.4"
+  },
+  "devDependencies": {
+    "husky": "^1.2.1",
+    "prettier": "1.15.3",
+    "pretty-quick": "^1.8.0"
   }
 }
