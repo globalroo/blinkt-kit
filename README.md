@@ -1,2 +1,2 @@
 # blinkt-js
-Pimeronoi Blinkt! NodeJS bindings. Based on node-blinkt, updated for Node > 8.
+Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.
