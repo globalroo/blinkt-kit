@@ -1,14 +1,14 @@
-# blinkt-js
+# blinkt-kit
 
 Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.
 
 ```sh
-npm install blinkt-js
+npm install blinkt-kit
 ```
 
 ```javascript
 
-const { Blinkt } = require("blinkt-js");
+const { Blinkt } = require("blinkt-kit");
 
 const blinkt = new Blinkt();
 

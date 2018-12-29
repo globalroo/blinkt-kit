@@ -1,15 +1,15 @@
 {
-  "name": "blinkt-js",
+  "name": "blinkt-kit",
   "version": "1.0.0",
   "description": "Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.",
-  "main": "Blinkt.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "node example/index.js",
     "precommit": "pretty-quick --staged"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/globalroo/blinkt-js.git"
+    "url": "git+https://github.com/globalroo/blinkt-kit.git"
   },
   "keywords": [
     "Blinkt",
@@ -20,9 +20,9 @@
   "author": "Andy Davies",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/globalroo/blinkt-js/issues"
+    "url": "https://github.com/globalroo/blinkt-kit/issues"
   },
-  "homepage": "https://github.com/globalroo/blinkt-js#readme",
+  "homepage": "https://github.com/globalroo/blinkt-kit#readme",
   "dependencies": {
     "node-wiring-pi": "0.0.4"
   },
