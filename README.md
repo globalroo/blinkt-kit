@@ -3,7 +3,7 @@
 Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.
 
 ```sh
-npm install blinkt-kit  --save-dev
+npm install blinkt-kit --save
 ```
 
 ```javascript
