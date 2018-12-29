@@ -1,6 +1,6 @@
 {
   "name": "blinkt-js",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.",
   "main": "Blinkt.js",
   "scripts": {
