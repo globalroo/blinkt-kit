@@ -21,7 +21,7 @@ class Blinkt {
 		wpi.pinMode(this.dat, wpi.OUTPUT);
 		wpi.pinMode(this.clk, wpi.OUTPUT);
 
-		this.blinktPixels = Array.from(new Array(DEFAULT_PIXELS), (_, ix) => [
+		this.blinktPixels = Array.from(new Array(DEFAULT_PIXELS), () => [
 			DEFAULT_RED,
 			DEFAULT_GREEN,
 			DEFAULT_BLUE,
@@ -41,17 +41,17 @@ class Blinkt {
 		return [parseInt(r, 10) & 255, parseInt(g, 10) & 255, parseInt(b, 10) & 255, this.getBrightness(brightness)];
 	}
 
-	setPixel({ ix = 0, r, g, b, brightness = DEFAULT_BRIGHTNESS } = {}) {
-		this.blinktPixels[ix] = this.getPixel({ r, g, b, brightness });
+	setPixel({ pixel = 0, r, g, b, brightness = DEFAULT_BRIGHTNESS } = {}) {
+		this.blinktPixels[pixel] = this.getPixel({ r, g, b, brightness });
 	}
 
 	setAll({ r, g, b, brightness } = {}) {
-		this.blinktPixels.forEach((_, ix) => this.setPixel({ ix, r, g, b, brightness }));
+		this.blinktPixels.forEach((_, pixel) => this.setPixel({ pixel, r, g, b, brightness }));
 	}
 
-	setBrightness({ pixelNumber, brightness = DEFAULT_BRIGHTNESS }) {
-		if (typeof pixelNumber !== "undefined") {
-			this.blinktPixels[pixelNumber][3] = this.getBrightness(brightness);
+	setBrightness({ pixel, brightness = DEFAULT_BRIGHTNESS }) {
+		if (typeof pixel !== "undefined") {
+			this.blinktPixels[pixel][3] = this.getBrightness(brightness);
 		} else {
 			this.blinktPixels.forEach(pixel => (pixel[3] = this.getBrightness(brightness)));
 		}

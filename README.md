@@ -12,26 +12,25 @@ const { Blinkt } = require("blinkt-kit");
 
 const blinkt = new Blinkt();
 
-blinkt.setAllPixels({ r: 179, g: 69, b: 251, brightness: 0.1 });
-blinkt.setPixel({ ix: 0, r: 255, brightness: 0.1 });
-blinkt.setPixel({ ix: 0, g: 255, brightness: 0.1 });
-blinkt.setPixel({ ix: 0, b: 255, brightness: 0.1 });
+blinkt.setAll({ r: 128, g: 0, b: 128, brightness: 0.2 });
+blinkt.setPixel({ pixel: 0, r: 255 });
+blinkt.setPixel({ pixel: 1, g: 255 });
+blinkt.setPixel({ pixel: 2, b: 255 });
 
 // Send update applies your changes to the Blinkt!
-blinkt.sendUpdate();
+blinkt.show();
 
 // Switch everything off after two seconds.
 setTimeout(() => {
-	blinkt.clearAll();
-	blinkt.sendUpdate();
-}, 2000)
+	blinkt.clear();
+}, 2000);
 
 ```
 
 ## API
 
 ```javascript
-setPixel({ ix = 0, r, g, b brightness = DEFAULT_BRIGHTNESS }
+setPixel({ pixel = 0, r, g, b, brightness = DEFAULT_BRIGHTNESS }
 ```
 Set an individual Blinkt! pixel to the a specific value.
 <table class="responsive">
@@ -41,7 +40,7 @@ Set an individual Blinkt! pixel to the a specific value.
     </tr>
     <tr>
       <td>
-        <code>ix</code>
+        <code>pixel</code>
       </td>
       <td>
         <code>Number (optional)</code><br>
@@ -89,7 +88,7 @@ Set an individual Blinkt! pixel to the a specific value.
 </table>
 
 ```javascript
-setAllPixels({ r, g, b, brightness }
+setAll({ r, g, b, brightness }
 ```
 Set all of the Blinkt! pixels to the same values.
 <table class="responsive">
@@ -138,9 +137,9 @@ Set all of the Blinkt! pixels to the same values.
 </table>
 
 ```javascript
-setBrightness({ pixelNumber, brightness = DEFAULT_BRIGHTNESS })
+setBrightness({ pixel, brightness = DEFAULT_BRIGHTNESS })
 ```
-Set the brightness of all the Blinkt! pixels if no pixelNumber specified, or the brightness for all of them if no PixelNumber specified.
+Set the brightness of all the Blinkt! pixels if no pixel specified, or the brightness for all of them if no PixelNumber specified.
 <table class="responsive">
   <tbody>
     <tr>
@@ -148,7 +147,7 @@ Set the brightness of all the Blinkt! pixels if no pixelNumber specified, or the
     </tr>
 	<tr>
       <td>
-        <code>pixelNumber</code>
+        <code>pixel</code>
       </td>
       <td>
         <code>Number (optional)</code><br>
@@ -170,16 +169,44 @@ Set the brightness of all the Blinkt! pixels if no pixelNumber specified, or the
 </table>
 
 ```javascript
-clearAll()
+clear()
 ```
 Unsets all of the Blinkt! Pixels
+
 ```javascript
-sendUpdate()
+setClearOnExit(true|false)
 ```
+Will undo all Blinkt! configuration and reset LEDs if the process ends or is interrupted with CTRL C.
+<table class="responsive">
+  <tbody>
+    <tr>
+      <td colspan="2"><b>Parameters</b> </td>
+    </tr>
+	<tr>
+      <td>
+        <code>shouldClearOnExit</code>
+      </td>
+      <td>
+        <code>Boolean Default: true</code><br>
+      </td>
+    </tr>
+
+
+
+  </tbody>
+</table>
+
+### Importantly!
+
+```javascript
+show()
+```
+*Commits all the 'set' operations to the Blinkt! (Nothing will show without this!)*
 
 ## Acknowledgements
 
-Based off [node-blinkt](https://github.com/irrelon/node-blinkt). Modified to use [node-wiring-pi](https://github.com/rsg98/node-wiring-pi) rather than [wiringpi-node](https://github.com/WiringPi/WiringPi-Node) which enables Node > version 8 to be used with the examples.
+- Original python code: http://docs.pimoroni.com/blinkt/
+- Based off [node-blinkt](https://github.com/irrelon/node-blinkt). Modified to use [node-wiring-pi](https://github.com/rsg98/node-wiring-pi) rather than [wiringpi-node](https://github.com/WiringPi/WiringPi-Node) which enables Node > version 8 to be used with the examples.
 
 Tested with Node 11.6 on Raspbian which was installed by following this guide:
 

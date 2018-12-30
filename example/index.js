@@ -12,7 +12,7 @@ const turnAllOnWithColour = colour =>
 
 const turnOnWithColour = (ix, colour) =>
 	new Promise(resolve => {
-		blinkt.setPixel({ ix, ...colour });
+		blinkt.setPixel({ pixel: ix, ...colour });
 		blinkt.show();
 		setTimeout(() => resolve(), TEST_DELAY);
 	});
