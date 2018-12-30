@@ -163,14 +163,14 @@ const COLOURS = {
 };
 
 const PI_RAINBOW = [
-	COLOURS.RED,
-	COLOURS.DARKORANGE,
-	COLOURS.GOLD,
-	COLOURS.GREEN,
-	COLOURS.DODGERBLUE,
-	{ ...COLOURS.DARKBLUE, brightness: 0.2 },
-	{ ...COLOURS.PURPLE, brightness: 0.2 },
-	COLOURS.DARKVIOLET
+	{ r: 128, g: 0, b: 0 },
+	{ r: 128, g: 64, b: 0 },
+	{ r: 128, g: 128, b: 0 },
+	{ r: 0, g: 128, b: 0 },
+	{ r: 0, g: 128, b: 128 },
+	{ r: 0, g: 0, b: 128 },
+	{ r: 64, g: 0, b: 128 },
+	{ r: 128, g: 0, b: 128 }
 ];
 
 module.exports = {

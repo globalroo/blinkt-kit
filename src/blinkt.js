@@ -13,7 +13,7 @@ const DEFAULT_BRIGHTNESS = 0.1;
 const DEFAULT_PIXELS = 8;
 
 class Blinkt {
-	constructor({ dat = DAT, clk = CLK, mode = MODE } = {}) {
+	constructor({ dat = DAT, clk = CLK, mode = MODE, clearOnExit = false } = {}) {
 		this.dat = dat;
 		this.clk = clk;
 
@@ -28,7 +28,9 @@ class Blinkt {
 			DEFAULT_BRIGHTNESS
 		]);
 
-		this.sendUpdate();
+		if (clearOnExit) {
+			this.setClearOnExit();
+		}
 	}
 
 	getBrightness(brightness = DEFAULT_BRIGHTNESS) {
@@ -43,7 +45,7 @@ class Blinkt {
 		this.blinktPixels[ix] = this.getPixel({ r, g, b, brightness });
 	}
 
-	setAllPixels({ r, g, b, brightness } = {}) {
+	setAll({ r, g, b, brightness } = {}) {
 		this.blinktPixels.forEach((_, ix) => this.setPixel({ ix, r, g, b, brightness }));
 	}
 
@@ -55,8 +57,21 @@ class Blinkt {
 		}
 	}
 
-	clearAll() {
-		this.setAllPixels({ r: 0, g: 0, b: 0, brightness: 0 });
+	clear() {
+		this.setAll({ r: 0, g: 0, b: 0, brightness: 0 });
+		this.show();
+	}
+
+	cleanup() {
+		this.clear();
+		process.exit();
+	}
+
+	setClearOnExit(value = true) {
+		if (this.clearOnExit) return;
+		this.clearOnExit = true;
+		process.on("exit", () => this.cleanup());
+		process.on("SIGINT", () => this.cleanup());
 	}
 
 	writeByte(byte) {
@@ -68,8 +83,9 @@ class Blinkt {
 		}
 	}
 
-	sendUpdate() {
+	show() {
 		for (let i = 0; i < 4; i++) this.writeByte(0);
+
 		this.blinktPixels.forEach(pixel => {
 			const [red, green, blue, brightness] = pixel;
 			this.writeByte(0b11100000 | brightness);
@@ -77,6 +93,7 @@ class Blinkt {
 			this.writeByte(green);
 			this.writeByte(red);
 		});
+
 		this.writeByte(0xff);
 	}
 }

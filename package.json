@@ -1,6 +1,6 @@
 {
   "name": "blinkt-kit",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.",
   "main": "src/index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/globalroo/blinkt-kit#readme",
   "dependencies": {
+    "blinkt-utils": "^1.0.0",
     "node-wiring-pi": "0.0.4"
   },
   "devDependencies": {
