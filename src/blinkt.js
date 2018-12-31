@@ -74,18 +74,36 @@ class Blinkt {
 		process.on("SIGINT", () => this.cleanup());
 	}
 
+	writeData(bit) {
+		wpi.digitalWrite(this.dat, bit);
+		wpi.digitalWrite(this.clk, 1);
+		wpi.digitalWrite(this.clk, 0);
+	}
+
 	writeByte(byte) {
 		for (let i = 0; i < DEFAULT_PIXELS; i++) {
 			const bit = (byte & (1 << (7 - i))) > 0 === true ? wpi.HIGH : wpi.LOW;
-			wpi.digitalWrite(this.dat, bit);
-			wpi.digitalWrite(this.clk, 1);
-			wpi.digitalWrite(this.clk, 0);
+			this.writeData(bit);
 		}
 	}
 
-	show() {
-		for (let i = 0; i < 4; i++) this.writeByte(0);
+	writeDataNTimes(bit, cycles) {
+		for (let i = 0; i < cycles; i++) this.writeData(bit);
+	}
 
+	// Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
+	// for some reason it takes 36 clocks, the other IC takes just 4 (number of pixels/2)
+
+	eof() {
+		this.writeDataNTimes(0, 36);
+	}
+
+	sof() {
+		this.writeDataNTimes(0, 32);
+	}
+
+	show() {
+		this.sof();
 		this.blinktPixels.forEach(pixel => {
 			const [red, green, blue, brightness] = pixel;
 			this.writeByte(0b11100000 | brightness);
@@ -93,8 +111,7 @@ class Blinkt {
 			this.writeByte(green);
 			this.writeByte(red);
 		});
-
-		this.writeByte(0xff);
+		this.eof();
 	}
 }
 
