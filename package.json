@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/globalroo/blinkt-kit#readme",
   "dependencies": {
-    "blinkt-utils": "^1.0.0",
     "node-wiring-pi": "0.0.4"
   },
   "devDependencies": {
