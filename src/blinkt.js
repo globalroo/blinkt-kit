@@ -21,12 +21,7 @@ class Blinkt {
 		wpi.pinMode(this.dat, wpi.OUTPUT);
 		wpi.pinMode(this.clk, wpi.OUTPUT);
 
-		this.blinktPixels = Array.from(new Array(DEFAULT_PIXELS), () => [
-			DEFAULT_RED,
-			DEFAULT_GREEN,
-			DEFAULT_BLUE,
-			DEFAULT_BRIGHTNESS
-		]);
+		this.blinktPixels = Array.from(new Array(DEFAULT_PIXELS), () => [DEFAULT_RED, DEFAULT_GREEN, DEFAULT_BLUE, 0]);
 
 		if (clearOnExit) {
 			this.setClearOnExit();
