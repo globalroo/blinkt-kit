@@ -9,7 +9,7 @@ const MODE = "gpio";
 const DEFAULT_RED = 0;
 const DEFAULT_GREEN = 0;
 const DEFAULT_BLUE = 0;
-const DEFAULT_BRIGHTNESS = 0.1;
+const DEFAULT_BRIGHTNESS = 0.2;
 const DEFAULT_PIXELS = 8;
 
 class Blinkt {
@@ -43,6 +43,10 @@ class Blinkt {
 
 	setPixel({ pixel = 0, r, g, b, brightness = DEFAULT_BRIGHTNESS } = {}) {
 		this.blinktPixels[pixel] = this.getPixel({ r, g, b, brightness });
+	}
+
+	getAll() {
+		return this.blinktPixels;
 	}
 
 	setAll({ r, g, b, brightness } = {}) {

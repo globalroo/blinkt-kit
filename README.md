@@ -130,7 +130,7 @@ Set an individual Blinkt! pixel to the a specific value.
 </table>
 
 ```javascript
-setAll({ r, g, b, brightness }
+setAll({ r, g, b, brightness })
 ```
 Set all of the Blinkt! pixels to the same values.
 <table class="responsive">
@@ -177,6 +177,11 @@ Set all of the Blinkt! pixels to the same values.
 
   </tbody>
 </table>
+
+```javascript
+getAll()
+```
+Return the current state of the Blinkt! pixels.
 
 ```javascript
 setBrightness({ pixel, brightness = DEFAULT_BRIGHTNESS })

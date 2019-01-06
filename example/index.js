@@ -27,6 +27,8 @@ const basicColours = async () => {
 	for (let ix = 0, length = PI_RAINBOW.length; ix < length; ix++) {
 		await turnOnWithColour(ix, PI_RAINBOW[ix]);
 	}
+	console.info("Current pixel settings");
+	console.log(blinkt.getAll());
 };
 
 runThrough().then(async () => {
