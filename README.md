@@ -72,7 +72,7 @@ runThrough().then(async () => {
 ## API
 
 ```javascript
-setPixel({ pixel = 0, r, g, b, brightness = DEFAULT_BRIGHTNESS }
+setPixel({ pixel = 0, r, g, b, brightness = DEFAULT_BRIGHTNESS })
 ```
 Set an individual Blinkt! pixel to the a specific value.
 <table class="responsive">
