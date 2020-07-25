@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/globalroo/blinkt-kit#readme",
   "dependencies": {
-    "node-wiring-pi": "0.0.4"
+    "rpio": "^2.2.0"
   },
   "devDependencies": {
     "husky": "^1.2.1",
