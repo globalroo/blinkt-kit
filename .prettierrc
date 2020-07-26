@@ -4,7 +4,6 @@
 	"tabWidth": 4,
 	"singleQuote": false,
 	"trailingComma": "none",
-	"parser": "babylon",
 	"semi": true,
 	"bracketSpacing": true
   }
