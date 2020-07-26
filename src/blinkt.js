@@ -1,6 +1,6 @@
 "use strict";
 
-const wpi = require("node-wiring-pi");
+const rpio = require("rpio");
 
 const DAT = 23;
 const CLK = 24;
@@ -17,9 +17,9 @@ class Blinkt {
 		this.dat = dat;
 		this.clk = clk;
 
-		wpi.setup(mode);
-		wpi.pinMode(this.dat, wpi.OUTPUT);
-		wpi.pinMode(this.clk, wpi.OUTPUT);
+		rpio.init({ mapping: mode, close_on_exit: false });
+		rpio.open(this.dat, rpio.OUTPUT, rpio.LOW);
+		rpio.open(this.clk, rpio.OUTPUT, rpio.LOW);
 
 		this.blinktPixels = Array.from(new Array(DEFAULT_PIXELS), () => [DEFAULT_RED, DEFAULT_GREEN, DEFAULT_BLUE, 0]);
 
@@ -63,6 +63,7 @@ class Blinkt {
 
 	cleanup() {
 		this.clear();
+		rpio.exit();
 		process.exit();
 	}
 
@@ -74,14 +75,14 @@ class Blinkt {
 	}
 
 	writeData(bit) {
-		wpi.digitalWrite(this.dat, bit);
-		wpi.digitalWrite(this.clk, 1);
-		wpi.digitalWrite(this.clk, 0);
+		rpio.write(this.dat, bit);
+		rpio.write(this.clk, rpio.HIGH);
+		rpio.write(this.clk, rpio.LOW);
 	}
 
 	writeByte(byte) {
 		for (let i = 0; i < DEFAULT_PIXELS; i++) {
-			const bit = (byte & (1 << (7 - i))) > 0 === true ? wpi.HIGH : wpi.LOW;
+			const bit = (byte & (1 << (7 - i))) > 0 === true ? rpio.HIGH : rpio.LOW;
 			this.writeData(bit);
 		}
 	}
