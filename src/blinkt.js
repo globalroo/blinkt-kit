@@ -16,6 +16,7 @@ class Blinkt {
 	constructor({ dat = DAT, clk = CLK, mode = MODE, clearOnExit = false } = {}) {
 		this.dat = dat;
 		this.clk = clk;
+		this.cleanedUp = false;
 
 		rpio.init({ mapping: mode, close_on_exit: false });
 		rpio.open(this.dat, rpio.OUTPUT, rpio.LOW);
@@ -123,9 +124,12 @@ class Blinkt {
 	}
 
 	cleanup() {
-		this.clear();
-		rpio.exit();
-		process.exit();
+		if (!this.cleanedUp) {
+			this.cleanedUp = true;
+			this.clear();
+			rpio.exit();
+			process.exit();
+		}
 	}
 
 	setClearOnExit(value = true) {
