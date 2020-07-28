@@ -425,8 +425,6 @@ show()
 ## Acknowledgements
 
 - Original python code: http://docs.pimoroni.com/blinkt/
-- Based off [node-blinkt](https://github.com/irrelon/node-blinkt). Modified to use [node-wiring-pi](https://github.com/rsg98/node-wiring-pi) rather than [wiringpi-node](https://github.com/WiringPi/WiringPi-Node) which enables Node > version 8 to be used with the examples.
 
-Tested with Node 11.6 on Raspbian which was installed by following this guide:
+- Updated to use rpio for Node 12+ compatibility by [Chris Kinsman](https://github.com/chriskinsman)
 
-- https://thisdavej.com/beginners-guide-to-installing-node-js-on-a-raspberry-pi/
