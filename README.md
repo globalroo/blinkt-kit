@@ -37,6 +37,24 @@ const { Blinkt, COLOURS, PI_RAINBOW } = require("blinkt-kit");
 const blinkt = new Blinkt({ clearOnExit: true });
 const TEST_DELAY = 1000;
 
+const showInitialAnimation = colour =>
+	new Promise(resolve => {
+		blinkt.showInitialAnimation({ ...colour });
+		setTimeout(() => resolve(), TEST_DELAY);
+	})
+
+const showFinalAnimation = colour =>
+	new Promise(resolve => {
+		blinkt.showFinalAnimation({ ...colour });
+		setTimeout(() => resolve(), TEST_DELAY);
+	})
+
+const flashPixel = (ix, colour) =>
+	new Promise(resolve => {
+		blinkt.flashPixel({ pixel: ix, times: 2, intervalms: 500, brightness: 0.5, ...colour });
+		setTimeout(() => resolve(), TEST_DELAY);
+	})
+
 const turnAllOnWithColour = colour =>
 	new Promise(resolve => {
 		blinkt.setAll({ ...colour });
@@ -52,9 +70,12 @@ const turnOnWithColour = (ix, colour) =>
 	});
 
 const runThrough = async () => {
+	await showInitialAnimation(COLOURS.GREEN);
+	await flashPixel(2, COLOURS.GREEN);
 	await turnAllOnWithColour(COLOURS.RED);
 	await turnAllOnWithColour(COLOURS.GREEN);
 	await turnAllOnWithColour(COLOURS.BLUE);
+	await showFinalAnimation(COLOURS.RED);
 };
 
 const basicColours = async () => {
@@ -122,7 +143,7 @@ Set an individual Blinkt! pixel to the a specific value.
       </td>
       <td>
         <code>Number (optional)</code><br>
-        The relative brightness for the pixel 0.0 to 1.0<br/>Defaults to 0.1
+        The relative brightness for the pixel 0.0 to 1.0<br/>Defaults to 0.2
       </td>
     </tr>
 
@@ -171,7 +192,7 @@ Set all of the Blinkt! pixels to the same values.
       </td>
       <td>
         <code>Number (optional)</code><br>
-        The relative brightness for the pixel 0.0 to 1.0<br/>Defaults to 0.1
+        The relative brightness for the pixel 0.0 to 1.0<br/>Defaults to 0.2
       </td>
     </tr>
 
@@ -182,6 +203,80 @@ Set all of the Blinkt! pixels to the same values.
 getAll()
 ```
 Return the current state of the Blinkt! pixels.
+
+```javascript
+flashPixel({pixel, times, intervalms, r, g, b, brightness})
+```
+<table class="responsive">
+  <tbody>
+    <tr>
+      <td colspan="2"><b>Parameters</b> </td>
+    </tr>
+    <tr>
+      <td>
+        <code>pixel</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The Pixel to update 0 to 7<br/> Defaults to 0
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>times</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The number of times to flash the pixel<br/> Defaults to 0
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>intervalms</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The milliseconds to pause between state changes<br/> Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>r</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The RED value for the Pixel 0 to 255<br/> Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>g</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The GREEN value for the Pixel 0 to 255<br/>Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>b</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The BLUE value for the Pixel 0 to 255<br/>Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>brightness</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The relative brightness for the pixel 0.0 to 1.0<br/>Defaults to 0.2
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ```javascript
 setBrightness({ pixel, brightness = DEFAULT_BRIGHTNESS })
@@ -207,11 +302,88 @@ Set the brightness of all the Blinkt! pixels if no pixel specified, or the brigh
       </td>
       <td>
         <code>Number (optional)</code><br>
-       The relative brightness for the pixel 0.0 to 1.0<br/>Defaults to 0.1
+       The relative brightness for the pixel 0.0 to 1.0<br/>Defaults to 0.2
       </td>
     </tr>
 
 
+  </tbody>
+</table>
+
+```javascript
+showInitialAnimation({r, g, b})
+```
+Show an animation that starts with two pixels in the center fading up, extends outwards at full brightness and then turns off.
+<table class="responsive">
+  <tbody>
+    <tr>
+      <td colspan="2"><b>Parameters</b> </td>
+    </tr>
+	<tr>
+      <td>
+        <code>r</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The RED value for the Pixel 0 to 255<br/> Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>g</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The GREEN value for the Pixel 0 to 255<br/>Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>b</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The BLUE value for the Pixel 0 to 255<br/>Defaults to 0
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+```javascript
+showFinalAnimation({r, g, b})
+```
+<table class="responsive">
+  <tbody>
+    <tr>
+      <td colspan="2"><b>Parameters</b> </td>
+    </tr>
+	<tr>
+      <td>
+        <code>r</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The RED value for the Pixel 0 to 255<br/> Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>g</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The GREEN value for the Pixel 0 to 255<br/>Defaults to 0
+      </td>
+    </tr>
+	<tr>
+      <td>
+        <code>b</code>
+      </td>
+      <td>
+        <code>Number (optional)</code><br>
+        The BLUE value for the Pixel 0 to 255<br/>Defaults to 0
+      </td>
+    </tr>
   </tbody>
 </table>
 
