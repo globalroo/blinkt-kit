@@ -1,6 +1,6 @@
 {
   "name": "blinkt-kit",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Pimoroni Blinkt! NodeJS bindings. Based on node-blinkt. Updated for Node > 8.",
   "main": "src/index.js",
   "scripts": {
