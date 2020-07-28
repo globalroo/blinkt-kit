@@ -3,6 +3,24 @@ const { Blinkt, COLOURS, PI_RAINBOW } = require("../src/index");
 const blinkt = new Blinkt({ clearOnExit: true });
 const TEST_DELAY = 1000;
 
+const showInitialAnimation = colour =>
+	new Promise(resolve => {
+		blinkt.showInitialAnimation({ ...colour });
+		setTimeout(() => resolve(), TEST_DELAY);
+	});
+
+const showFinalAnimation = colour =>
+	new Promise(resolve => {
+		blinkt.showFinalAnimation({ ...colour });
+		setTimeout(() => resolve(), TEST_DELAY);
+	});
+
+const flashPixel = (ix, colour) =>
+	new Promise(resolve => {
+		blinkt.flashPixel({ pixel: ix, times: 2, intervalms: 500, brightness: 0.5, ...colour });
+		setTimeout(() => resolve(), TEST_DELAY);
+	});
+
 const turnAllOnWithColour = colour =>
 	new Promise(resolve => {
 		blinkt.setAll({ ...colour });
@@ -18,9 +36,12 @@ const turnOnWithColour = (ix, colour) =>
 	});
 
 const runThrough = async () => {
+	await showInitialAnimation(COLOURS.GREEN);
+	await flashPixel(2, COLOURS.GREEN);
 	await turnAllOnWithColour(COLOURS.RED);
 	await turnAllOnWithColour(COLOURS.GREEN);
 	await turnAllOnWithColour(COLOURS.BLUE);
+	await showFinalAnimation(COLOURS.RED);
 };
 
 const basicColours = async () => {

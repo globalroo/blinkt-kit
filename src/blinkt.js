@@ -56,6 +56,67 @@ class Blinkt {
 		}
 	}
 
+	flashPixel({ pixel, times, intervalms, r, g, b, brightness = DEFAULT_BRIGHTNESS } = {}) {
+		this.setPixel({ pixel, r, g, b, brightness });
+		for (let i = 0; i < times; i++) {
+			this.setBrightness({ pixel, brightness });
+			this.show();
+			rpio.msleep(intervalms);
+			this.setBrightness({ pixel, brightness: 0 });
+			this.show();
+			rpio.msleep(intervalms);
+		}
+	}
+
+	showInitialAnimation({ r, g, b } = {}) {
+		this.clear();
+		this.setPixel({ pixel: 3, r, g, b });
+		this.setPixel({ pixel: 4, r, g, b });
+		for (let i = 0; i <= 10; i++) {
+			let brightness = i * 0.05;
+			this.setBrightness({ pixel: 3, brightness });
+			this.setBrightness({ pixel: 4, brightness });
+			this.show();
+			rpio.msleep(100);
+		}
+
+		for (let pixel = 2; pixel >= 0; pixel--) {
+			let mirrorPixel = 7 - pixel;
+			this.setPixel({ pixel, r, g, b });
+			this.setPixel({ pixel: mirrorPixel, r, g, b });
+			this.show();
+			rpio.msleep(250);
+		}
+
+		this.clear();
+		this.show();
+	}
+
+	showFinalAnimation({ r, g, b } = {}) {
+		this.setAll({ r, g, b, brightness: 1.0 });
+		this.show();
+		rpio.msleep(50);
+
+		for (let pixel = 0; pixel < 3; pixel++) {
+			let mirrorPixel = 7 - pixel;
+			this.setPixel({ pixel, r: 0, g: 0, b: 0 });
+			this.setPixel({ pixel: mirrorPixel, r: 0, g: 0, b: 0 });
+			this.show();
+			rpio.msleep(250);
+		}
+
+		for (let i = 10; i > 0; i--) {
+			let brightness = i * 0.05;
+			this.setBrightness({ pixel: 3, brightness });
+			this.setBrightness({ pixel: 4, brightness });
+			this.show();
+			rpio.msleep(100);
+		}
+
+		this.clear();
+		this.show();
+	}
+
 	clear() {
 		this.setAll({ r: 0, g: 0, b: 0, brightness: 0 });
 		this.show();
